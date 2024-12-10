@@ -16,6 +16,11 @@ class AccountAPI extends ApiClient {
     );
     return response.data.cache_keys;
   }
+
+  getWABAID(token) {
+    const data = {"code": token}
+    return axios.post(`${this.baseUrl()}/get_waba_id`, data);
+  }
 }
 
 export default new AccountAPI();
