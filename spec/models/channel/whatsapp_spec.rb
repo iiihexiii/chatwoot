@@ -4,8 +4,24 @@ require 'rails_helper'
 require Rails.root.join 'spec/models/concerns/reauthorizable_shared.rb'
 
 RSpec.describe Channel::Whatsapp do
+  let(:response_headers) { { 'Content-Type' => 'application/json' } }
+  before do
+    stub_request(:get, /subscribed_apps/)
+      .to_return(status: 200, body: { 'data': [{ 'whatsapp_business_api_data': { 'link': 'https://www.facebook.com/games/?app_id=742189254309938',
+                                                                                 'name': 'Baggio - 41998154704', 'id': '742189254309938' } }] }.to_json, headers: response_headers)
+    stub_request(:post, /subscribed_apps/)
+      .to_return(status: 200, body: '', headers: response_headers)
+    stub_request(:post, /register/)
+      .to_return(status: 200, body: '', headers: response_headers)
+    stub_request(:get, %r{oauth/access_token})
+      .to_return(status: 200, body: { 'access_token': '1234', expires_in: Time.current.to_i }.to_json, headers: response_headers)
+
+    stub_request(:get, /debug_token/)
+      .to_return(status: 200, body: { 'data': { 'expires_at': 10.days.from_now.to_i } }.to_json, headers: response_headers)
+  end
   describe 'concerns' do
     let(:channel) { create(:channel_whatsapp) }
+
 
     before do
       stub_request(:post, 'https://waba.360dialog.io/v1/configs/webhook')
@@ -37,11 +53,13 @@ RSpec.describe Channel::Whatsapp do
     end
 
     it 'validates true when provider config is right' do
-      stub_request(:get, 'https://graph.facebook.com/v14.0//message_templates?access_token=test_key')
+      stub_request(:get, /message_templates/)
         .to_return(status: 200,
                    body: { data: [{
                      id: '123456789', name: 'test_template'
                    }] }.to_json)
+                   stub_request(:get, /random_id/).to_return(status: 200, body: '', headers: response_headers)
+      
       expect(channel.save).to be(true)
     end
   end
