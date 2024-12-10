@@ -218,6 +218,7 @@
           "LABEL": "API提供商",
           "TWILIO": "思源",
           "WHATSAPP_CLOUD": "WhatsApp 云服务",
+          "WHATSAPP_BUSINESS_API": "Whatsapp Business API",
           "360_DIALOG": "360Dialog"
         },
         "INBOX_NAME": {

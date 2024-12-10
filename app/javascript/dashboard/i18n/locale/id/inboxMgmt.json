@@ -218,6 +218,7 @@
           "LABEL": "Penyedia API",
           "TWILIO": "Twilio",
           "WHATSAPP_CLOUD": "WhatsApp Cloud",
+          "WHATSAPP_BUSINESS_API": "Whatsapp Business API",
           "360_DIALOG": "360Dialog"
         },
         "INBOX_NAME": {
