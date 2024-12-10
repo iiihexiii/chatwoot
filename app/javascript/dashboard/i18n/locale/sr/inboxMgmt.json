@@ -218,6 +218,7 @@
           "LABEL": "API provajder",
           "TWILIO": "Twilio",
           "WHATSAPP_CLOUD": "WhatsApp oblak",
+          "WHATSAPP_BUSINESS_API": "Whatsapp Business API",
           "360_DIALOG": "360Dialog"
         },
         "INBOX_NAME": {

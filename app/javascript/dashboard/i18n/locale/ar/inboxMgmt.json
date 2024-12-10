@@ -218,6 +218,7 @@
           "LABEL": "API Provider",
           "TWILIO": "تويليو",
           "WHATSAPP_CLOUD": "واتساب السحابة",
+          "WHATSAPP_BUSINESS_API": "واتساب اعمال API",
           "360_DIALOG": "360dialog"
         },
         "INBOX_NAME": {

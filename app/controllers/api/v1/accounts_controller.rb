@@ -56,6 +56,28 @@ class Api::V1::AccountsController < Api::BaseController
     head :ok
   end
 
+  def get_waba_id
+    response =  HTTParty.get("https://graph.facebook.com/v18.0/oauth/access_token?client_id=#{ENV.fetch('FB_APP_ID', nil)}&client_secret=#{ENV.fetch('FB_APP_SECRET', nil)}&code=#{params[:code]}")
+    user_token = response["access_token"]
+    response = HTTParty.get("https://graph.facebook.com/v18.0/debug_token?input_token=#{user_token}&access_token=#{ENV.fetch(
+      'FB_APP_ACCESS_ID', nil
+    )}")
+    scopes = response["data"]["granular_scopes"]
+    
+    whatsapp_business_management_obj = scopes.find do |item|
+      item["scope"] == "whatsapp_business_management"
+    end
+    waba_id = whatsapp_business_management_obj["target_ids"][0]
+
+    url = "https://graph.facebook.com/v18.0/#{waba_id}/phone_numbers"
+    headers = { 'Authorization' => "Bearer #{user_token}" }
+
+    phone_numbers_reponse = HTTParty.get(url, headers: headers)
+    phone_numbers = phone_numbers_reponse["data"]
+
+    render json: { waba_id: waba_id, phone_numbers: phone_numbers, api_key: user_token }, status: :ok
+  end
+
   private
 
   def ensure_account_name

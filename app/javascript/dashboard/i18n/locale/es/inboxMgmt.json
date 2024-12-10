@@ -218,6 +218,7 @@
           "LABEL": "Proveedor de API",
           "TWILIO": "Twilio",
           "WHATSAPP_CLOUD": "Nube de WhatsApp",
+          "WHATSAPP_BUSINESS_API": "Whatsapp Business API",
           "360_DIALOG": "360 Diálogo"
         },
         "INBOX_NAME": {

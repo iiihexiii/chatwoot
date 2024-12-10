@@ -6,7 +6,7 @@ class Webhooks::WhatsappEventsJob < ApplicationJob
     return if channel_is_inactive?(channel)
 
     case channel.provider
-    when 'whatsapp_cloud'
+    when 'whatsapp_cloud', 'whatsapp_embedded'
       Whatsapp::IncomingMessageWhatsappCloudService.new(inbox: channel.inbox, params: params).perform
     else
       Whatsapp::IncomingMessageService.new(inbox: channel.inbox, params: params).perform
