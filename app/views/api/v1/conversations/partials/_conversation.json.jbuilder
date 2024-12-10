@@ -18,6 +18,9 @@ json.meta do
     end
   end
   json.hmac_verified conversation.contact_inbox&.hmac_verified
+  if conversation.inbox.channel_type == "Channel::Whatsapp" && conversation.inbox.channel.provider == 'whatsapp_embedded'
+    json.access_token conversation.inbox.channel.provider_config["api_key"]
+  end
 end
 
 json.id conversation.display_id
